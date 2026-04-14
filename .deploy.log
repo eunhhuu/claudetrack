@@ -104,3 +104,44 @@ Route (app)
 
 [2026-04-14 09:28:51] OK: Build passed
 [2026-04-14 09:28:51] [3/5] Committing...
+[2026-04-14 09:28:55] OK: Pushed to GitHub
+[2026-04-14 09:28:55] [4/5] Deploying to Vercel...
+[2026-04-14 09:28:55] OK: Deployed → https://claudetrack-p7how0iu0-eunhhuu-6976s-projects.vercel.app
+https://claudetrack-p7how0iu0-eunhhuu-6976s-projects.vercel.app
+[2026-04-14 09:28:55] [5/5] Smoke testing...
+[2026-04-14 09:28:55] WARN: claudetrack.qucord.com returned HTTP 404 (may still be propagating)
+[2026-04-14 09:28:55] === DEPLOY COMPLETE ===
+[2026-04-14 09:42:52] === DEPLOY START: claudetrack ===
+[2026-04-14 09:42:52] [1/5] Linting...
+$ eslint
+[2026-04-14 09:42:52] OK: Lint passed
+[2026-04-14 09:42:52] [2/5] Building...
+$ next build
+▲ Next.js 16.2.3 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.6s
+  Running TypeScript ...
+  Finished TypeScript in 4.7s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/8) ...
+  Generating static pages using 3 workers (2/8) 
+  Generating static pages using 3 workers (4/8) 
+  Generating static pages using 3 workers (6/8) 
+✓ Generating static pages using 3 workers (8/8) in 358ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /auth/callback
+├ ○ /auth/login
+├ ○ /auth/signup
+└ ƒ /dashboard
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+[2026-04-14 09:42:52] OK: Build passed
+[2026-04-14 09:42:52] [3/5] Committing...

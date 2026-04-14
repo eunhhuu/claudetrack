@@ -5,61 +5,21 @@ const features = [
     title: "Usage Tracking",
     description:
       "Monitor token consumption, API calls, and costs across all your AI coding sessions in real time.",
-    icon: (
-      <svg
-        className="h-7 w-7"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"
-        />
-      </svg>
-    ),
+    iconPath:
+      "M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z",
   },
   {
     title: "Session History",
     description:
       "Review every coding session with detailed breakdowns of model usage, duration, and token spend.",
-    icon: (
-      <svg
-        className="h-7 w-7"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-        />
-      </svg>
-    ),
+    iconPath: "M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",
   },
   {
-    title: "Team Management",
+    title: "Budget Alerts",
     description:
-      "Set budgets, track per-member usage, and get alerts before your team exceeds spending limits.",
-    icon: (
-      <svg
-        className="h-7 w-7"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
-        />
-      </svg>
-    ),
+      "Set monthly budgets per project or team and get notified before you exceed spending limits.",
+    iconPath:
+      "M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0",
   },
 ];
 
@@ -76,6 +36,7 @@ const plans = [
       "Email reports",
     ],
     cta: "Get Started",
+    href: "/auth/signup",
     highlighted: false,
   },
   {
@@ -92,6 +53,7 @@ const plans = [
       "Priority support",
     ],
     cta: "Start Free Trial",
+    href: "/auth/signup?plan=pro",
     highlighted: true,
   },
   {
@@ -108,9 +70,24 @@ const plans = [
       "Dedicated support",
     ],
     cta: "Contact Sales",
+    href: "mailto:sales@claudetrack.dev",
     highlighted: false,
   },
 ];
+
+function Icon({ path }: { path: string }) {
+  return (
+    <svg
+      className="h-7 w-7"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d={path} />
+    </svg>
+  );
+}
 
 export default function Home() {
   return (
@@ -140,7 +117,7 @@ export default function Home() {
               href="/auth/signup"
               className="inline-flex h-12 items-center justify-center rounded-full bg-indigo-600 px-8 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Get Started
+              Get Started Free
             </Link>
             <a
               href="#features"
@@ -170,7 +147,7 @@ export default function Home() {
                 className="group rounded-2xl border border-zinc-200 bg-white p-8 transition hover:border-indigo-200 hover:shadow-lg hover:shadow-indigo-500/5 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-indigo-800"
               >
                 <div className="mb-4 inline-flex rounded-xl bg-indigo-50 p-3 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400">
-                  {feature.icon}
+                  <Icon path={feature.iconPath} />
                 </div>
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-white">
                   {feature.title}
@@ -247,15 +224,16 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  className={`mt-8 w-full rounded-full py-2.5 text-sm font-semibold transition ${
+                <Link
+                  href={plan.href}
+                  className={`mt-8 block w-full rounded-full py-2.5 text-center text-sm font-semibold transition ${
                     plan.highlighted
                       ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/25 hover:bg-indigo-500"
                       : "border border-zinc-200 text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
                   }`}
                 >
                   {plan.cta}
-                </button>
+                </Link>
               </div>
             ))}
           </div>
@@ -266,16 +244,25 @@ export default function Home() {
       <footer className="border-t border-zinc-200 px-6 py-12 dark:border-zinc-800">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 sm:flex-row">
           <p className="text-sm text-zinc-500 dark:text-zinc-400">
-            &copy; 2026 ClaudeTrack. All rights reserved.
+            &copy; {new Date().getFullYear()} ClaudeTrack. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-zinc-500 dark:text-zinc-400">
-            <a href="#" className="transition hover:text-zinc-900 dark:hover:text-white">
+            <Link
+              href="/privacy"
+              className="transition hover:text-zinc-900 dark:hover:text-white"
+            >
               Privacy
-            </a>
-            <a href="#" className="transition hover:text-zinc-900 dark:hover:text-white">
+            </Link>
+            <Link
+              href="/terms"
+              className="transition hover:text-zinc-900 dark:hover:text-white"
+            >
               Terms
-            </a>
-            <a href="#" className="transition hover:text-zinc-900 dark:hover:text-white">
+            </Link>
+            <a
+              href="https://docs.claudetrack.dev"
+              className="transition hover:text-zinc-900 dark:hover:text-white"
+            >
               Docs
             </a>
           </div>

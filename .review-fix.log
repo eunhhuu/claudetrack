@@ -1,0 +1,29 @@
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+모든 작업 완료. 요약:
+
+---
+
+## 변경 사항
+
+**DB Layer (신규)**
+- `supabase/migrations/001_initial_schema.sql` — profiles, projects, sessions 테이블 + RLS 정책 + 자동 프로필 생성 trigger
+- `src/lib/types.ts` — 타입 정의
+- `src/lib/queries.ts` — `getDashboardStats()`, `getDailyUsage()`, `getRecentSessions()`, `getProfile()` 서버 쿼리
+
+**Dashboard (mock → real)**
+- `dashboard/page.tsx` — 서버에서 3개 쿼리 `Promise.all`로 병렬 실행 후 props 전달
+- `dashboard-content.tsx` — 하드코딩 데이터 전부 제거, props 기반 렌더링, empty state 추가, cents 단위 포맷팅 유틸리티
+
+**Navbar (전면 재작성)**
+- `navbar.tsx` (신규) — 인증 상태 감지, 로그인/로그아웃 전환, 모바일 햄버거 메뉴, active route 표시
+- `layout.tsx` — 인라인 Navbar 제거, 새 컴포넌트 사용
+
+**Landing Page**
+- `page.tsx` — 인라인 SVG JSX를 데이터 배열 + `Icon` 컴포넌트로 분리, 프라이싱 `<button>`을 실제 `<Link>`로 교체 (`/auth/signup`, `mailto:`), footer dead link → 실제 경로
+
+**버그 수정**
+- `supabase.ts` — 싱글톤 패턴 적용
+- `signup/page.tsx` — 미사용 `useRouter` import 제거
+- `globals.css` — Geist 폰트를 덮어쓰던 `font-family: Arial` 제거
+
+**빌드**: `bun run build` 성공, TypeScript 에러 0개.
