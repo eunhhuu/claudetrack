@@ -16,11 +16,11 @@ fi
 
 mkdir -p "$STATE_DIR"
 
-cat > "$CONFIG_FILE" <<CONF
-{"api_key":"$API_KEY","api_url":"$API_URL"}
+cat > "$CONFIG_FILE" << CONF
+{"api_key": "$API_KEY","api_url":"$API_URL"}
 CONF
 
-cat > "$TRACKER_SCRIPT" <<'SCRIPT'
+cat > "$TRACKER_SCRIPT" << 'SCRIPT'
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -29,90 +29,90 @@ CONFIG_FILE="$STATE_DIR/config.json"
 STATE_FILE="$STATE_DIR/last_state.json"
 STATS_FILE="$HOME/.claude/stats-cache.json"
 
-if [ ! -f "$CONFIG_FILE" ]; then
-  exit 0
-fi
+if [ ! -f "$CONFIG_FILE" ]; then exit 0; fi
+if [ ! -f "$STATS_FILE" ]; then exit 0; fi
 
-API_KEY=$(python3 -c "import json,sys;print(json.load(open('$CONFIG_FILE'))['api_key'])" 2>/dev/null || echo "")
-API_URL=$(python3 -c "import json,sys;print(json.load(open('$CONFIG_FILE'))['api_url'])" 2>/dev/null || echo "")
+API_KEY=$(python3 -c "import json; print(json.load(open('$CONFIG_FILE'))['api_key'])" 2>/dev/null || echo "")
+API_URL=$(python3 -c "import json; print(json.load(open('$CONFIG_FILE'))['api_url'])" 2>/dev/null || echo "")
 
-if [ -z "$API_KEY" ] || [ -z "$API_URL" ]; then
-  exit 0
-fi
+if [ -z "$API_KEY" ] || [ -z "$API_URL" ]; then exit 0; fi
 
-if [ ! -f "$STATS_FILE" ]; then
-  exit 0
-fi
+python3 << PYEOF
+import json, os, sys
+from datetime import datetime, timezone
 
-CURRENT=$(cat "$STATS_FILE")
+stats_file = os.path.expanduser("~/.claude/stats-cache.json")
+state_file = os.path.expanduser("$STATE_FILE")
+api_key = "$API_KEY"
+api_url = "$API_URL"
 
-if [ -f "$STATE_FILE" ]; then
-  PREVIOUS=$(cat "$STATE_FILE")
-else
-  PREVIOUS="{}"
-fi
+with open(stats_file) as f:
+    current = json.load(f)
 
-python3 -c "
-import json, sys, urllib.request, datetime
+prev = {}
+if os.path.exists(state_file):
+    with open(state_file) as f:
+        prev = json.load(f)
 
-current = json.loads('''$CURRENT''')
-previous = json.loads('''$PREVIOUS''')
+prev_usage = prev.get("modelUsage", {})
+curr_usage = current.get("modelUsage", {})
 
-api_key = '$API_KEY'
-api_url = '$API_URL'
+import urllib.request
 
-prev_usage = previous.get('modelUsage', {})
-curr_usage = current.get('modelUsage', {})
-
-today = datetime.date.today().isoformat()
+today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 for model, data in curr_usage.items():
-    prev = prev_usage.get(model, {})
-    input_diff = data.get('inputTokens', 0) - prev.get('inputTokens', 0)
-    output_diff = data.get('outputTokens', 0) - prev.get('outputTokens', 0)
-    cost_diff = data.get('costUSD', 0) - prev.get('costUSD', 0)
+    prev_data = prev_usage.get(model, {})
+    diff_input = data.get("inputTokens", 0) - prev_data.get("inputTokens", 0)
+    diff_output = data.get("outputTokens", 0) - prev_data.get("outputTokens", 0)
+    diff_cache = data.get("cacheReadInputTokens", 0) - prev_data.get("cacheReadInputTokens", 0)
+    diff_cost = data.get("costUSD", 0) - prev_data.get("costUSD", 0)
 
-    if input_diff <= 0 and output_diff <= 0:
+    if diff_input <= 0 and diff_output <= 0:
         continue
 
     payload = json.dumps({
-        'model': model,
-        'inputTokens': max(0, input_diff),
-        'outputTokens': max(0, output_diff),
-        'cacheReadTokens': max(0, data.get('cacheReadInputTokens', 0) - prev.get('cacheReadInputTokens', 0)),
-        'costUSD': round(max(0, cost_diff), 6),
-        'date': today,
-        'projectName': 'default'
+        "model": model,
+        "inputTokens": max(0, diff_input),
+        "outputTokens": max(0, diff_output),
+        "cacheReadTokens": max(0, diff_cache),
+        "costUSD": max(0, diff_cost),
+        "date": today,
+        "projectName": "default"
     }).encode()
 
     req = urllib.request.Request(
         api_url,
         data=payload,
         headers={
-            'Content-Type': 'application/json',
-            'Authorization': f'Bearer {api_key}'
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}"
         },
-        method='POST'
+        method="POST"
     )
     try:
-        urllib.request.urlopen(req, timeout=10)
-    except Exception:
-        pass
-" 2>/dev/null || true
+        urllib.request.urlopen(req, timeout=5)
+    except Exception as e:
+        print(f"Error sending {model}: {e}", file=sys.stderr)
 
-cp "$STATS_FILE" "$STATE_FILE"
+with open(state_file, "w") as f:
+    json.dump(current, f)
+
+print("ClaudeTrack: synced usage data")
+PYEOF
 SCRIPT
 
 chmod +x "$TRACKER_SCRIPT"
 
-CRON_CMD="*/5 * * * * $TRACKER_SCRIPT"
-(crontab -l 2>/dev/null | grep -v "$TRACKER_SCRIPT"; echo "$CRON_CMD") | crontab -
+# cron 등록 (*/5 * * * *)
+CRON_JOB="*/5 * * * * $TRACKER_SCRIPT >> $STATE_DIR/tracker.log 2>&1"
+(crontab -l 2>/dev/null || true) | grep -v "claudetrack\|tracker.sh" | { cat; echo "$CRON_JOB"; } | crontab -
 
 echo ""
-echo "✓ ClaudeTrack tracker installed!"
+echo "ClaudeTrack tracker installed!"
 echo "  Config: $CONFIG_FILE"
-echo "  Script: $TRACKER_SCRIPT"
-echo "  Cron:   every 5 minutes"
+echo "  Cron: every 5 minutes"
+echo "  Logs: $STATE_DIR/tracker.log"
 echo ""
-echo "  Your usage data will appear on your dashboard shortly."
-echo ""
+echo "Usage data will appear in your dashboard within 5 minutes."
+echo "Dashboard: https://claudetrack.qucord.com/dashboard"

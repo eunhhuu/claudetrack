@@ -120,3 +120,25 @@ Route (app)
 ƒ  (Dynamic)  server-rendered on demand
 [2026-04-14 10:19:40] OK: Build passed
 [2026-04-14 10:19:40] [3/5] Committing...
+[main fefc24f] `chore: add research/content docs and redesign UI components`
+ 19 files changed, 1866 insertions(+), 647 deletions(-)
+ create mode 100644 .overhaul.log
+ create mode 100644 content/blog_2026-04-14.md
+ create mode 100644 content/product_hunt_prep.md
+ create mode 100644 content/tweet_drafts_2026-04-14.md
+ create mode 100644 research/2026-04-14_competitive_analysis.md
+ create mode 100644 research/2026-04-14_daily_summary.md
+ create mode 100644 research/2026-04-14_github_trending.md
+ create mode 100644 research/2026-04-14_hn_pain_points.md
+ create mode 100644 research/2026-04-14_user_research.md
+To https://github.com/eunhhuu/claudetrack.git
+   4752ac2..fefc24f  main -> main
+[2026-04-14 10:19:40] OK: Pushed to GitHub
+[2026-04-14 10:19:40] [4/5] Deploying to Vercel...
+[2026-04-14 10:19:40] OK: Deployed → https://claudetrack-1gc4tfx5o-eunhhuu-6976s-projects.vercel.app
+https://claudetrack-1gc4tfx5o-eunhhuu-6976s-projects.vercel.app
+[2026-04-14 10:19:40] [5/5] Smoke testing...
+[2026-04-14 10:19:40] OK: claudetrack.qucord.com → HTTP 200
+[2026-04-14 10:19:40] === DEPLOY COMPLETE ===
+
+Live at: https://claudetrack.qucord.com
