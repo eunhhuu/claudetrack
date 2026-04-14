@@ -1,0 +1,41 @@
+[2026-04-14 09:27:50] === DEPLOY START: claudetrack ===
+[2026-04-14 09:27:50] [1/5] Linting...
+$ eslint
+
+/mnt/ssd/projects/claudetrack/src/app/auth/signup/page.tsx
+  9:9  warning  'router' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (0 errors, 1 warning)
+
+[2026-04-14 09:27:50] OK: Lint passed
+[2026-04-14 09:27:50] [2/5] Building...
+$ next build
+▲ Next.js 16.2.3 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 10.5s
+  Running TypeScript ...
+  Finished TypeScript in 5.7s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/8) ...
+  Generating static pages using 3 workers (2/8) 
+  Generating static pages using 3 workers (4/8) 
+  Generating static pages using 3 workers (6/8) 
+✓ Generating static pages using 3 workers (8/8) in 359ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /auth/callback
+├ ○ /auth/login
+├ ○ /auth/signup
+└ ƒ /dashboard
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+[2026-04-14 09:27:50] OK: Build passed
+[2026-04-14 09:27:50] [3/5] Committing...

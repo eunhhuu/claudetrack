@@ -66,12 +66,18 @@ function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="text-sm text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+          <Link
+            href="/auth/login"
+            className="text-sm text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
+          >
             Sign In
-          </button>
-          <button className="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-indigo-500">
+          </Link>
+          <Link
+            href="/auth/signup"
+            className="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-indigo-500"
+          >
             Get Started
-          </button>
+          </Link>
         </div>
       </nav>
     </header>

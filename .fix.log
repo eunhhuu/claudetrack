@@ -1,0 +1,12 @@
+=== DELEGATING TO CLAUDE CODE ===
+Project: claudetrack
+Task: Fix broken UI:
+1. Sign In button → /auth/login
+2. Get Started button → /auth/signup
+3. Create /auth/login page (email+password + GitHub OAuth with Supabase)
+4. Create /auth/signup page (email+password with Supabase)
+5. Create /auth/callback/route.ts (OAuth callback handler)
+6. Dashboard redirect to /auth/login if not authenticated
+7. All buttons must work - no dead UI
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
