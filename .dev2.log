@@ -96,3 +96,88 @@ Route (app)
 ƒ  (Dynamic)  server-rendered on demand
 [2026-04-14 09:59:02] OK: Build passed
 [2026-04-14 09:59:02] [3/5] Committing...
+[main aa339b4] `feat: add ingest API, tracker script, landing page, and RLS policies`
+ 10 files changed, 725 insertions(+), 270 deletions(-)
+ create mode 100644 .dev2.log
+ create mode 100644 public/install/tracker.sh
+ create mode 100644 src/app/api/ingest/route.ts
+ create mode 100644 src/app/landing-content.tsx
+ create mode 100644 supabase/migrations/002_service_role_policies.sql
+To https://github.com/eunhhuu/claudetrack.git
+   9f5abb4..aa339b4  main -> main
+[2026-04-14 09:59:02] OK: Pushed to GitHub
+[2026-04-14 09:59:02] [4/5] Deploying to Vercel...
+[2026-04-14 09:59:02] OK: Deployed → https://claudetrack-l1ndkii0n-eunhhuu-6976s-projects.vercel.app
+https://claudetrack-l1ndkii0n-eunhhuu-6976s-projects.vercel.app
+[2026-04-14 09:59:02] [5/5] Smoke testing...
+[2026-04-14 09:59:02] OK: claudetrack.qucord.com → HTTP 200
+[2026-04-14 09:59:02] === DEPLOY COMPLETE ===
+
+Live at: https://claudetrack.qucord.com
+=== DELEGATING TO CLAUDE CODE ===
+Project: claudetrack
+Task: Fix landing page auth-aware CTA buttons:
+
+src/app/page.tsx is a server component that checks Supabase session.
+src/app/landing-content.tsx is a client component.
+
+The server component should:
+1. Get user session with createServerSupabaseClient()
+2. Pass isLoggedIn boolean to LandingContent
+
+LandingContent should:
+- If isLoggedIn=true: all CTA buttons (Get Started, Start Free Trial, Get Started Free) → /dashboard
+- If isLoggedIn=false: → /auth/signup
+
+Check current implementation and fix if not working correctly.
+Run bun run build to confirm.
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+빌드 성공입니다. 구현 상태를 정리하면:
+
+- **`page.tsx`**: `createServerSupabaseClient()`로 유저 세션을 가져오고 `!!user`를 `isLoggedIn`으로 전달 — 정상
+- **`landing-content.tsx`**: `isLoggedIn` 기반으로 모든 CTA가 조건 분기됨
+  - Hero 버튼: 로그인 시 `/dashboard`, 미로그인 시 `/auth/signup`
+  - Free 플랜: 동일 분기
+  - Pro 플랜: 로그인 시 `/dashboard`, 미로그인 시 `/auth/signup?plan=pro`
+  - Team 플랜: 항상 `mailto:sales@claudetrack.dev` (의도된 동작)
+  - 버튼 텍스트도 로그인 상태에 따라 "Go to Dashboard" / "Get Started" 등으로 변경
+
+현재 구현이 요구사항대로 정확히 동작하고 있고, 빌드도 성공합니다. 수정할 사항이 없습니다.
+
+=== TASK COMPLETE - Running deploy ===
+[2026-04-14 10:08:06] === DEPLOY START: claudetrack ===
+[2026-04-14 10:08:06] [1/5] Linting...
+$ eslint
+[2026-04-14 10:08:06] OK: Lint passed
+[2026-04-14 10:08:06] [2/5] Building...
+$ next build
+▲ Next.js 16.2.3 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.8s
+  Running TypeScript ...
+  Finished TypeScript in 4.7s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/9) ...
+  Generating static pages using 3 workers (2/9) 
+  Generating static pages using 3 workers (4/9) 
+  Generating static pages using 3 workers (6/9) 
+✓ Generating static pages using 3 workers (9/9) in 300ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /api/ingest
+├ ƒ /auth/callback
+├ ○ /auth/login
+├ ○ /auth/signup
+└ ƒ /dashboard
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+[2026-04-14 10:08:06] OK: Build passed
+[2026-04-14 10:08:06] [3/5] Committing...
