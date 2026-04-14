@@ -114,12 +114,12 @@ export default function Navbar() {
             <>
               {!isDashboard && (
                 <>
-                  <a href="/#how-it-works" className="text-sm text-muted-strong transition hover:text-white">
+                  <Link href="/#how-it-works" className="text-sm text-muted-strong transition hover:text-white">
                     How It Works
-                  </a>
-                  <a href="/#pricing" className="text-sm text-muted-strong transition hover:text-white">
+                  </Link>
+                  <Link href="/#pricing" className="text-sm text-muted-strong transition hover:text-white">
                     Pricing
-                  </a>
+                  </Link>
                 </>
               )}
               <Link
@@ -182,12 +182,12 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <a href="/#how-it-works" onClick={() => setMobileOpen(false)} className="text-sm text-zinc-300 hover:text-white">
+                <Link href="/#how-it-works" onClick={() => setMobileOpen(false)} className="text-sm text-zinc-300 hover:text-white">
                   How It Works
-                </a>
-                <a href="/#pricing" onClick={() => setMobileOpen(false)} className="text-sm text-zinc-300 hover:text-white">
+                </Link>
+                <Link href="/#pricing" onClick={() => setMobileOpen(false)} className="text-sm text-zinc-300 hover:text-white">
                   Pricing
-                </a>
+                </Link>
                 <Link href="/auth/login" onClick={() => setMobileOpen(false)} className="text-sm text-zinc-300 hover:text-white">
                   Sign In
                 </Link>
