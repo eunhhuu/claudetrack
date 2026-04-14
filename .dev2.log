@@ -1,0 +1,98 @@
+=== DELEGATING TO CLAUDE CODE ===
+Project: claudetrack
+Task: Fix two critical issues:
+
+## Issue 1: Auth flow bug
+- If user is already logged in, 'Start Free Trial' and 'Get Started' buttons should go to /dashboard NOT /auth/signup
+- In src/app/page.tsx: pricing buttons and hero CTA must check auth state
+  - Solution: make the landing page check Supabase session server-side, pass isLoggedIn prop to client component
+  - If logged in: buttons → /dashboard
+  - If not logged in: buttons → /auth/signup
+
+## Issue 2: Real tracking mechanism
+ClaudeTrack tracks AI coding usage by parsing ~/.claude/stats-cache.json which Claude Code writes automatically.
+
+The stats-cache.json contains:
+- modelUsage: per-model token counts (inputTokens, outputTokens, cacheReadInputTokens, cacheCreationInputTokens, costUSD)
+- dailyActivity: per-day session counts
+- dailyModelTokens: per-day per-model token breakdown
+
+Build a tracker CLI agent that users install:
+
+1. Create src/app/api/ingest/route.ts
+   - POST endpoint accepting: { model, inputTokens, outputTokens, cacheReadTokens, costUSD, date, projectName }
+   - Requires Authorization: Bearer <api_key> header
+   - Saves to Supabase sessions table
+
+2. Create a tracker script at public/install/tracker.sh
+   - Users run: curl -s https://claudetrack.qucord.com/install/tracker.sh | bash
+   - Script installs to ~/.claudetrack/tracker.sh
+   - Adds cron: */5 * * * * to run every 5 min
+   - Reads ~/.claude/stats-cache.json
+   - Diffs from last run (store last state in ~/.claudetrack/last_state.json)
+   - POSTs diff to https://claudetrack.qucord.com/api/ingest with user's API key
+
+3. Add API key management to dashboard
+   - src/app/dashboard/page.tsx: add 'API Key' section showing user's key
+   - API key = Supabase user id (simple approach for MVP)
+   - Show install command: curl -s https://claudetrack.qucord.com/install/tracker.sh | bash -s -- <api_key>
+
+4. Update dashboard to show REAL data from sessions table
+
+Also remove Google OAuth button from login/signup pages (only GitHub + email)
+
+Run bun run build and fix all errors.
+
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+모든 작업이 완료되었습니다. 빌드도 에러 없이 성공했습니다.
+
+**변경 요약:**
+
+1. **Auth flow 수정** — `page.tsx`를 서버 컴포넌트로 분리하여 Supabase 세션을 확인하고, 새로 만든 `landing-content.tsx` 클라이언트 컴포넌트에 `isLoggedIn` prop을 전달합니다. 로그인 상태면 CTA 버튼들이 `/dashboard`로, 아니면 `/auth/signup`으로 이동합니다.
+
+2. **Ingest API** (`src/app/api/ingest/route.ts`) — `Bearer <user_id>` 인증으로 토큰 사용량 데이터를 수신하여 sessions 테이블에 저장합니다. 프로젝트가 없으면 자동 생성합니다.
+
+3. **Tracker script** (`public/install/tracker.sh`) — `curl | bash -s -- <api_key>`로 설치. `~/.claude/stats-cache.json`을 5분마다 파싱하여 diff를 ingest API로 전송합니다.
+
+4. **Dashboard API Key 섹션** — 사용자 ID(= API Key)와 설치 명령어를 복사 가능한 형태로 표시합니다.
+
+5. **DB 마이그레이션** (`002_service_role_policies.sql`) — service role이 sessions/projects에 insert할 수 있도록 RLS 정책을 추가했습니다.
+
+6. **Google OAuth** — 이미 코드에 없음 (GitHub + email만 존재). 변경 불필요.
+
+=== TASK COMPLETE - Running deploy ===
+[2026-04-14 09:59:02] === DEPLOY START: claudetrack ===
+[2026-04-14 09:59:02] [1/5] Linting...
+$ eslint
+[2026-04-14 09:59:02] OK: Lint passed
+[2026-04-14 09:59:02] [2/5] Building...
+$ next build
+▲ Next.js 16.2.3 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.4s
+  Running TypeScript ...
+  Finished TypeScript in 4.7s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/9) ...
+  Generating static pages using 3 workers (2/9) 
+  Generating static pages using 3 workers (4/9) 
+  Generating static pages using 3 workers (6/9) 
+✓ Generating static pages using 3 workers (9/9) in 284ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /api/ingest
+├ ƒ /auth/callback
+├ ○ /auth/login
+├ ○ /auth/signup
+└ ƒ /dashboard
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+[2026-04-14 09:59:02] OK: Build passed
+[2026-04-14 09:59:02] [3/5] Committing...

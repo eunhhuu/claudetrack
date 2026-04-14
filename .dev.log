@@ -12,3 +12,19 @@ Warning: no stdin data received in 3s, proceeding without it. If piping from a s
 7. **빌드** - 모든 라우트 정상 빌드 완료
 
 이전 세션에서 모든 구현이 완료되었고, 빌드도 성공합니다. 커밋되지 않은 상태이니 커밋할까요?
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+모든 작업이 완료되었습니다. 빌드도 에러 없이 성공했습니다.
+
+**변경 요약:**
+
+1. **Auth flow 수정** — `page.tsx`를 서버 컴포넌트로 분리하여 Supabase 세션을 확인하고, 새로 만든 `landing-content.tsx` 클라이언트 컴포넌트에 `isLoggedIn` prop을 전달합니다. 로그인 상태면 CTA 버튼들이 `/dashboard`로, 아니면 `/auth/signup`으로 이동합니다.
+
+2. **Ingest API** (`src/app/api/ingest/route.ts`) — `Bearer <user_id>` 인증으로 토큰 사용량 데이터를 수신하여 sessions 테이블에 저장합니다. 프로젝트가 없으면 자동 생성합니다.
+
+3. **Tracker script** (`public/install/tracker.sh`) — `curl | bash -s -- <api_key>`로 설치. `~/.claude/stats-cache.json`을 5분마다 파싱하여 diff를 ingest API로 전송합니다.
+
+4. **Dashboard API Key 섹션** — 사용자 ID(= API Key)와 설치 명령어를 복사 가능한 형태로 표시합니다.
+
+5. **DB 마이그레이션** (`002_service_role_policies.sql`) — service role이 sessions/projects에 insert할 수 있도록 RLS 정책을 추가했습니다.
+
+6. **Google OAuth** — 이미 코드에 없음 (GitHub + email만 존재). 변경 불필요.

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   BarChart,
   Bar,
@@ -59,6 +60,7 @@ interface Props {
   dailyUsage: DailyUsage[];
   recentSessions: SessionWithProject[];
   userEmail: string;
+  userId: string;
 }
 
 export default function DashboardContent({
@@ -66,7 +68,11 @@ export default function DashboardContent({
   dailyUsage,
   recentSessions,
   userEmail,
+  userId,
 }: Props) {
+  const [copied, setCopied] = useState(false);
+  const installCmd = `curl -s https://claudetrack.qucord.com/install/tracker.sh | bash -s -- ${userId}`;
+
   const isEmpty = stats.session_count === 0;
 
   const now = new Date();
@@ -112,6 +118,56 @@ export default function DashboardContent({
             </span>
           </div>
         ))}
+      </div>
+
+      {/* API Key & Setup */}
+      <div className="mt-8 rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+        <h2 className="text-lg font-semibold text-zinc-900 dark:text-white">
+          Setup Tracker
+        </h2>
+        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+          Install the tracker to automatically sync your Claude Code usage.
+        </p>
+        <div className="mt-4">
+          <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            Your API Key
+          </label>
+          <div className="mt-1 flex items-center gap-2">
+            <code className="flex-1 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm font-mono text-zinc-800 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
+              {userId}
+            </code>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(userId);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="rounded-lg border border-zinc-200 px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            >
+              {copied ? "Copied!" : "Copy"}
+            </button>
+          </div>
+        </div>
+        <div className="mt-4">
+          <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            Install Command
+          </label>
+          <div className="mt-1 flex items-center gap-2">
+            <code className="flex-1 overflow-x-auto rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm font-mono text-zinc-800 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">
+              {installCmd}
+            </code>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(installCmd);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="shrink-0 rounded-lg border border-zinc-200 px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+            >
+              {copied ? "Copied!" : "Copy"}
+            </button>
+          </div>
+        </div>
       </div>
 
       {isEmpty ? (

@@ -25,6 +25,7 @@ export default async function DashboardPage() {
       dailyUsage={dailyUsage}
       recentSessions={recentSessions}
       userEmail={user.email ?? ""}
+      userId={user.id}
     />
   );
 }
