@@ -82,3 +82,18 @@ Route (app)
 ƒ  (Dynamic)  server-rendered on demand
 [2026-04-14 11:42:30] OK: Build passed
 [2026-04-14 11:42:30] [3/5] Committing...
+[main 2d9fed8] `feat: add Lemon Squeezy webhook and update dashboard/landing pages`
+ 8 files changed, 247 insertions(+), 5 deletions(-)
+ create mode 100644 .payments.log
+ create mode 100644 src/app/api/webhooks/lemonsqueezy/route.ts
+To https://github.com/eunhhuu/claudetrack.git
+   56b43b0..2d9fed8  main -> main
+[2026-04-14 11:42:30] OK: Pushed to GitHub
+[2026-04-14 11:42:30] [4/5] Deploying to Vercel...
+[2026-04-14 11:42:30] OK: Deployed → https://claudetrack-m7yz8mze4-eunhhuu-6976s-projects.vercel.app
+https://claudetrack-m7yz8mze4-eunhhuu-6976s-projects.vercel.app
+[2026-04-14 11:42:30] [5/5] Smoke testing...
+[2026-04-14 11:42:30] OK: claudetrack.qucord.com → HTTP 200
+[2026-04-14 11:42:30] === DEPLOY COMPLETE ===
+
+Live at: https://claudetrack.qucord.com
