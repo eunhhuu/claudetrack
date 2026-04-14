@@ -39,3 +39,68 @@ Route (app)
 
 [2026-04-14 09:27:50] OK: Build passed
 [2026-04-14 09:27:50] [3/5] Committing...
+[2026-04-14 09:27:50] OK: Pushed to GitHub
+[2026-04-14 09:27:50] [4/5] Deploying to Vercel...
+[2026-04-14 09:28:51] === DEPLOY START: claudetrack ===
+[2026-04-14 09:28:51] [1/5] Linting...
+$ eslint
+
+/mnt/ssd/projects/claudetrack/src/app/auth/signup/page.tsx
+  9:9  warning  'router' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (0 errors, 1 warning)
+
+[2026-04-14 09:28:51] OK: Lint passed
+[2026-04-14 09:28:51] [2/5] Building...
+$ next build
+▲ Next.js 16.2.3 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+[2026-04-14 09:28:55] === DEPLOY START: claudetrack ===
+[2026-04-14 09:28:55] [1/5] Linting...
+$ eslint
+
+/mnt/ssd/projects/claudetrack/src/app/auth/signup/page.tsx
+  9:9  warning  'router' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (0 errors, 1 warning)
+
+[2026-04-14 09:28:55] OK: Lint passed
+[2026-04-14 09:28:55] [2/5] Building...
+$ next build
+⨯ Another next build process is already running.
+
+  This could be:
+  - A next build still in progress
+  - A previous build that didn't exit cleanly
+
+  Suggestion: Wait for the build to complete.
+error: script "build" exited with code 1
+[2026-04-14 09:28:55] OK: Build passed
+[2026-04-14 09:28:55] [3/5] Committing...
+✓ Compiled successfully in 10.4s
+  Running TypeScript ...
+  Finished TypeScript in 4.6s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/8) ...
+  Generating static pages using 3 workers (2/8) 
+  Generating static pages using 3 workers (4/8) 
+  Generating static pages using 3 workers (6/8) 
+✓ Generating static pages using 3 workers (8/8) in 447ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /auth/callback
+├ ○ /auth/login
+├ ○ /auth/signup
+└ ƒ /dashboard
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+[2026-04-14 09:28:51] OK: Build passed
+[2026-04-14 09:28:51] [3/5] Committing...
