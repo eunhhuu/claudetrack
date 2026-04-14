@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ClaudeTrack - Track Your AI Coding Costs",
+  title: "ClaudeTrack - Stop Guessing What Claude Code Costs You",
   description:
-    "Monitor and optimize your AI-assisted development costs across Claude, GPT, Gemini and more.",
+    "Track your Claude Code costs in real-time. One install command, automatic usage tracking, per-model cost breakdown.",
 };
 
 export default function RootLayout({
@@ -29,7 +29,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-white dark:bg-zinc-950">
+      <body className="flex min-h-full flex-col bg-background text-foreground">
         <Navbar />
         <main className="flex-1">{children}</main>
       </body>

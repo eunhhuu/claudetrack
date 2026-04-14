@@ -229,3 +229,55 @@ Route (app)
 ƒ  (Dynamic)  server-rendered on demand
 [2026-04-14 10:08:06] OK: Build passed
 [2026-04-14 10:08:06] [3/5] Committing...
+[2026-04-14 10:08:06] OK: Pushed to GitHub
+[2026-04-14 10:08:06] [4/5] Deploying to Vercel...
+[2026-04-14 10:08:06] OK: Deployed → https://claudetrack-a7ydvzgd0-eunhhuu-6976s-projects.vercel.app
+https://claudetrack-a7ydvzgd0-eunhhuu-6976s-projects.vercel.app
+[2026-04-14 10:08:06] [5/5] Smoke testing...
+[2026-04-14 10:08:06] OK: claudetrack.qucord.com → HTTP 200
+[2026-04-14 10:08:06] === DEPLOY COMPLETE ===
+[2026-04-14 10:19:40] === DEPLOY START: claudetrack ===
+[2026-04-14 10:19:40] [1/5] Linting...
+$ eslint
+
+/mnt/ssd/projects/claudetrack/src/app/navbar.tsx
+  117:19  error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+  120:19  error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+  185:17  error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+  188:17  error  Do not use an `<a>` element to navigate to `/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+✖ 4 problems (4 errors, 0 warnings)
+
+error: script "lint" exited with code 1
+[2026-04-14 10:19:40] OK: Lint passed
+[2026-04-14 10:19:40] [2/5] Building...
+$ next build
+▲ Next.js 16.2.3 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.7s
+  Running TypeScript ...
+  Finished TypeScript in 5.1s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/9) ...
+  Generating static pages using 3 workers (2/9) 
+  Generating static pages using 3 workers (4/9) 
+  Generating static pages using 3 workers (6/9) 
+✓ Generating static pages using 3 workers (9/9) in 290ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /api/ingest
+├ ƒ /auth/callback
+├ ○ /auth/login
+├ ○ /auth/signup
+└ ƒ /dashboard
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+[2026-04-14 10:19:40] OK: Build passed
+[2026-04-14 10:19:40] [3/5] Committing...

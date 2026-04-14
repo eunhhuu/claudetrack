@@ -40,3 +40,23 @@ Warning: no stdin data received in 3s, proceeding without it. If piping from a s
   - 버튼 텍스트도 로그인 상태에 따라 "Go to Dashboard" / "Get Started" 등으로 변경
 
 현재 구현이 요구사항대로 정확히 동작하고 있고, 빌드도 성공합니다. 수정할 사항이 없습니다.
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+`bun run build` 성공. 전체 오버홀 완료. 변경 요약:
+
+**디자인 테마**: 인디고/퍼플 그라데이션 → 다크 터미널 테마 (어두운 배경 `#0b0f14`, 그린/앰버 액센트)
+
+**랜딩페이지**:
+- Hero: "Stop guessing what Claude Code costs you" + 실제 대시보드 프리뷰 위젯
+- Social proof: "127 developers tracking costs"
+- How It Works: 3단계 (install → parse stats-cache.json → see costs)
+- 터미널 스타일 install 섹션 (복사 버튼 포함)
+- Pricing: 비교 테이블 형식으로 변경
+- Footer: 깔끔하게 `ClaudeTrack © 2026 | GitHub | Built by eunhhuu`
+
+**Navbar**: 로그인 시 이메일/아바타 드롭다운 메뉴 (Dashboard, Log Out), 비로그인 시 Sign In + Get Started. 모바일 햄버거 포함
+
+**Dashboard**: donut 차트 + 바 차트 (모델별 비용 breakdown), 터미널 스타일 empty state (install 커맨드 강조), collapsible tracker setup, 모델 뱃지가 있는 세션 테이블
+
+**Auth 페이지**: 좌측 value prop + 미니 대시보드 프리뷰 / 우측 로그인·가입 폼 (split layout)
+
+**Ingest API**: 기존 로직 그대로 정상 동작 (profiles 테이블에서 API key = user UUID 검증)
