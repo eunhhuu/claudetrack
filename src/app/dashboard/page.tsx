@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
-import { getDashboardStats, getDailyUsage, getRecentSessions } from "@/lib/queries";
+import { getDashboardStats, getDailyUsage, getRecentSessions, getProfile } from "@/lib/queries";
 import DashboardContent from "./dashboard-content";
 
 export default async function DashboardPage() {
@@ -13,10 +13,11 @@ export default async function DashboardPage() {
     redirect("/auth/login");
   }
 
-  const [stats, dailyUsage, recentSessions] = await Promise.all([
+  const [stats, dailyUsage, recentSessions, profile] = await Promise.all([
     getDashboardStats(),
     getDailyUsage(),
     getRecentSessions(),
+    getProfile(),
   ]);
 
   return (
@@ -26,6 +27,7 @@ export default async function DashboardPage() {
       recentSessions={recentSessions}
       userEmail={user.email ?? ""}
       userId={user.id}
+      plan={profile?.plan ?? "free"}
     />
   );
 }

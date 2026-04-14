@@ -60,3 +60,23 @@ Warning: no stdin data received in 3s, proceeding without it. If piping from a s
 **Auth 페이지**: 좌측 value prop + 미니 대시보드 프리뷰 / 우측 로그인·가입 폼 (split layout)
 
 **Ingest API**: 기존 로직 그대로 정상 동작 (profiles 테이블에서 API key = user UUID 검증)
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+모든 작업이 완료되었습니다. 변경 요약:
+
+**1. 랜딩 페이지 (`landing-content.tsx`, `page.tsx`)**
+- `userEmail` prop 추가, 로그인 시 Lemon Squeezy 체크아웃 URL에 이메일 자동 포함
+- Pricing 섹션에 "Start Free Trial" 버튼 추가 → LS 체크아웃으로 연결
+
+**2. Webhook handler (`api/webhooks/lemonsqueezy/route.ts`)**
+- `order_created`, `subscription_created` 이벤트 처리
+- HMAC SHA-256 서명 검증 (timing-safe)
+- 결제 완료 시 `profiles` 테이블의 `plan`을 `pro`로 업데이트
+
+**3. `.env.local`**
+- `LEMONSQUEEZY_WEBHOOK_SECRET=webhook-secret-placeholder` 추가
+
+**4. Dashboard (`dashboard-content.tsx`, `page.tsx`)**
+- `plan` prop 추가, `getProfile()` 호출
+- Free plan 사용자에게 "Upgrade to Pro" 배너 표시 → 체크아웃 링크
+
+빌드 통과 확인 완료. LS 대시보드에서 webhook URL을 `https://your-domain/api/webhooks/lemonsqueezy`로 설정하고, 실제 secret으로 `.env.local` 값을 교체하면 됩니다.

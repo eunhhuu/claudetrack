@@ -5,6 +5,7 @@ import { useState } from "react";
 
 interface Props {
   isLoggedIn: boolean;
+  userEmail: string;
 }
 
 function TerminalLine({ prompt, cmd, delay }: { prompt: string; cmd: string; delay?: string }) {
@@ -82,9 +83,13 @@ function DashboardPreview() {
   );
 }
 
-export default function LandingContent({ isLoggedIn }: Props) {
+export default function LandingContent({ isLoggedIn, userEmail }: Props) {
   const ctaHref = isLoggedIn ? "/dashboard" : "/auth/signup";
   const [copied, setCopied] = useState(false);
+
+  const proCheckoutUrl = userEmail
+    ? `https://eunhhuu.lemonsqueezy.com/checkout/buy/1528193?checkout[email]=${encodeURIComponent(userEmail)}`
+    : "https://eunhhuu.lemonsqueezy.com/checkout/buy/1528193";
 
   function copyInstall() {
     navigator.clipboard.writeText("curl -s https://claudetrack.qucord.com/install/tracker.sh | bash");
@@ -283,10 +288,16 @@ export default function LandingContent({ isLoggedIn }: Props) {
           <div className="mt-8 flex justify-center gap-4">
             <Link
               href={ctaHref}
-              className="inline-flex h-11 items-center justify-center rounded-lg bg-accent-green px-6 text-sm font-semibold text-black transition hover:bg-accent-green/90"
+              className="inline-flex h-11 items-center justify-center rounded-lg border border-card-border px-6 text-sm font-medium text-zinc-300 transition hover:bg-card hover:border-zinc-600"
             >
               {isLoggedIn ? "Go to Dashboard" : "Get Started Free"}
             </Link>
+            <a
+              href={proCheckoutUrl}
+              className="inline-flex h-11 items-center justify-center rounded-lg bg-accent-green px-6 text-sm font-semibold text-black transition hover:bg-accent-green/90"
+            >
+              Start Free Trial
+            </a>
           </div>
         </div>
       </section>

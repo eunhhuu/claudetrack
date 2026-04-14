@@ -105,6 +105,7 @@ interface Props {
   recentSessions: SessionWithProject[];
   userEmail: string;
   userId: string;
+  plan: "free" | "pro" | "team";
 }
 
 export default function DashboardContent({
@@ -113,6 +114,7 @@ export default function DashboardContent({
   recentSessions,
   userEmail,
   userId,
+  plan,
 }: Props) {
   const isEmpty = stats.session_count === 0;
 
@@ -151,6 +153,26 @@ export default function DashboardContent({
           </p>
         </div>
       </div>
+
+      {plan === "free" && (
+        <a
+          href={`https://eunhhuu.lemonsqueezy.com/checkout/buy/1528193?checkout[email]=${encodeURIComponent(userEmail)}`}
+          className="mt-6 flex items-center justify-between rounded-xl border border-accent-green/20 bg-accent-green/5 px-5 py-3 transition hover:bg-accent-green/10"
+        >
+          <div className="flex items-center gap-3">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent-green/10 text-accent-green text-sm font-bold">
+              &#9733;
+            </span>
+            <div>
+              <p className="text-sm font-semibold text-white">Upgrade to Pro</p>
+              <p className="text-xs text-muted">Unlimited projects, 90-day history, budget alerts & API access</p>
+            </div>
+          </div>
+          <span className="shrink-0 rounded-md bg-accent-green px-3 py-1.5 text-xs font-semibold text-black">
+            $12/mo
+          </span>
+        </a>
+      )}
 
       {/* Stats Cards */}
       <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

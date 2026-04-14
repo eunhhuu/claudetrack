@@ -375,3 +375,46 @@ Route (app)
 ƒ  (Dynamic)  server-rendered on demand
 [2026-04-14 10:28:11] OK: Build passed
 [2026-04-14 10:28:11] [3/5] Committing...
+[2026-04-14 10:28:11] OK: Pushed to GitHub
+[2026-04-14 10:28:11] [4/5] Deploying to Vercel...
+[2026-04-14 10:28:11] OK: Deployed → https://claudetrack-7o4dmr16j-eunhhuu-6976s-projects.vercel.app
+https://claudetrack-7o4dmr16j-eunhhuu-6976s-projects.vercel.app
+[2026-04-14 10:28:11] [5/5] Smoke testing...
+[2026-04-14 10:28:11] OK: claudetrack.qucord.com → HTTP 200
+[2026-04-14 10:28:11] === DEPLOY COMPLETE ===
+[2026-04-14 11:42:30] === DEPLOY START: claudetrack ===
+[2026-04-14 11:42:30] [1/5] Linting...
+$ eslint
+[2026-04-14 11:42:30] OK: Lint passed
+[2026-04-14 11:42:30] [2/5] Building...
+$ next build
+▲ Next.js 16.2.3 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 8.8s
+  Running TypeScript ...
+  Finished TypeScript in 5.8s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/10) ...
+  Generating static pages using 3 workers (2/10) 
+  Generating static pages using 3 workers (4/10) 
+  Generating static pages using 3 workers (7/10) 
+✓ Generating static pages using 3 workers (10/10) in 278ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /api/ingest
+├ ƒ /api/webhooks/lemonsqueezy
+├ ƒ /auth/callback
+├ ○ /auth/login
+├ ○ /auth/signup
+└ ƒ /dashboard
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+[2026-04-14 11:42:30] OK: Build passed
+[2026-04-14 11:42:30] [3/5] Committing...
